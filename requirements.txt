@@ -25,6 +25,7 @@ django-allauth==0.45.0
 django-mathfilters==1.0.0
 django-phonenumber-field==5.2.0
 django-webpush==0.3.3
+django-widget-tweaks==1.4.9
 duplicity==0.8.12.0
 entrypoints==0.3
 fasteners==0.14.1
@@ -54,6 +55,7 @@ numpy==1.17.4
 oauthlib==3.1.1
 olefile==0.46
 paramiko==2.6.0
+pbr==5.7.0
 pexpect==4.6.0
 phonenumbers==8.12.33
 Pillow==8.3.2
@@ -92,6 +94,7 @@ slip==0.6.5
 slip.dbus==0.6.5
 sqlparse==0.4.2
 systemd-python==234
+testresources==2.0.1
 ubuntu-advantage-tools==27.3
 ubuntu-drivers-common==0.0.0
 ufw==0.36
