@@ -1,0 +1,148 @@
+{% load widget_tweaks %}
+
+<!-- start: page -->
+<div class="row">
+    <div class="col-xs-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <h1>Add New Member</h1>
+            </header>
+            <div class="panel-body">
+                <form class="form-horizontal" id="add_animal_form" action="{% url 'add_member' %}"
+                    data-cities-url="{% url 'ajax_load_cities' %}" method='post' enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="first_name">First Name</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="first_name" name='first_name'>
+                        </div>
+                        <strong>{{ form.first_name.errors }}</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="last_name">Last Name</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="last_name" name='last_name'>
+                            <strong>{{ form.last_name.errors }}</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Country</label>
+                        <div class="col-md-2">
+                            {{ form.country|attr:'class:form-control populate'| attr:'data-plugin-selectTwo' |attr:'id:country_form' }}
+                        </div>
+                        <strong>{{ form.country.errors }}</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">City</label>
+                        <div class="col-md-2">
+                            {{ form.city|attr:'class:form-control populate'| attr:'data-plugin-selectTwo' |attr:'id:city_form' }}
+                        </div>
+                        <strong>{{ form.city.errors }}</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="gender">Gender</label>
+                        <div class="col-md-2">
+                            <select class="form-select" aria-label="Default select example" name='gender'>
+                                <option selected>Select Your Gender</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                            </select>
+
+                        </div>
+                        <strong>{{ form.gender.errors }}</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="birth_date">Date of Birth</label>
+                        <div class="col-md-2">
+                            <input type="date" class="form-control" id="birth_date" name='birth_date'>
+                        </div>
+                        <strong>{{ form.birth_date.errors }}</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="phone_number">Phone Number</label>
+                        <div class="col-md-2">
+                            <input type="tel" class="form-control" id="phone_number" name='phone_number'>
+                        </div>
+                        <strong>{{ form.phone_number.errors }}</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="email">Email</label>
+                        <div class="col-md-2">
+                            <input type="email" class="form-control" id="email" name='email'>
+                        </div>
+                        <strong>{{ form.email.errors }}</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="notes">Notes</label>
+                        <div class="col-md-4">
+                            <textarea type="textarea" col='8' rows='4' class="form-control" id="notes"
+                                name='notes'></textarea>
+                        </div>
+                        <strong>{{ form.notes.errors }}</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label form-check-label" for="status">Member Status</label>
+                        <div class="col-md-2">
+                            <input type="checkbox" class="form-check-input" id="status" name='status'> Active</input>
+                        </div>
+                        <strong>{{ form.status.errors }}</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="profile_image">Profile Image</label>
+                        <div class="col-md-2">
+                            <input accept="image/*" type='file' id="imgInp" name='profile_image' />
+                            <img id="blah" src="/media/placeholders/01.png" alt="your image" width="250" height="250" />
+                        </div>
+                        <strong>{{ form.profile_image.errors }}</strong>
+                    </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'members_list' %}" class="btn btn-success">View All Members</a>
+            </form>
+    </div>
+    </section>
+</div>
+</div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $("#country_form").change(function () {
+        var url = $("#add_animal_form").attr("data-cities-url");
+        var countryId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'country': countryId
+            },
+            success: function (data) {
+                $("#city_form").html(data);
+            }
+        });
+
+    });
+
+    imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+</script>
